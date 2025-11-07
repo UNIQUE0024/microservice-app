@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Microservice App</title>
+</head>
+<body>
+    <h1>Welcome to Microservice App</h1>
+    <button onclick="fetchData()">Call Backend</button>
+    <p id="output"></p>
+
+    <script>
+        async function fetchData() {
+            const res = await fetch("http://localhost:5000/api/hello");
+            const data = await res.json();
+            document.getElementById("output").innerText = data.message;
+        }
+    </script>
+</body>
+</html>
+
