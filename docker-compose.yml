@@ -1,15 +1,25 @@
 version: "3.9"
 
 services:
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
   backend:
     build: ./backend
     container_name: backend
     ports:
       - "5000:5000"
+    depends_on:
+      - db
 
-  # Optional lightweight database
   db:
     image: postgres:15-alpine
+    container_name: db
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password

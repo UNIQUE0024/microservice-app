@@ -1,20 +1,57 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Microservice App</title>
+  <title>Microservice Frontend</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 100px;
+      background-color: #f9f9f9;
+    }
+    h1 {
+      color: #333;
+    }
+    #message {
+      margin-top: 20px;
+      font-size: 20px;
+      color: #007bff;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
 </head>
 <body>
-    <h1>Welcome to Microservice App</h1>
-    <button onclick="fetchData()">Call Backend</button>
-    <p id="output"></p>
+  <h1>Welcome to Microservice App</h1>
+  <p>This page is served by the Frontend container.</p>
 
-    <script>
-        async function fetchData() {
-            const res = await fetch("http://localhost:5000/api/hello");
-            const data = await res.json();
-            document.getElementById("output").innerText = data.message;
-        }
-    </script>
+  <button onclick="getMessage()">Get Backend Message</button>
+  <div id="message"></div>
+
+  <script>
+    async function getMessage() {
+      try {
+        const response = await fetch("/api/hello");
+        const data = await response.json();
+        document.getElementById('message').textContent = data.message;
+      } catch (error) {
+        document.getElementById('message').textContent = 'Error connecting to backend!';
+      }
+    }
+  </script>
 </body>
 </html>
 
