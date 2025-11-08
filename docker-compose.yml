@@ -1,33 +1,38 @@
 version: "3.9"
 
 services:
+  backend:
+    image: syeedaayesha/micro-backend:latest
+    container_name: backend
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - DATABASE_URL=postgresql://user:password@db:5432/microservice_db
+    depends_on:
+      - db
+
   frontend:
-    build: ./frontend
+    image: syeedaayesha/micro-frontend:latest
     container_name: frontend
+    restart: always
     ports:
       - "80:80"
     depends_on:
       - backend
 
-  backend:
-    build: ./backend
-    container_name: backend
-    ports:
-      - "5000:5000"
-    depends_on:
-      - db
-
   db:
     image: postgres:15-alpine
     container_name: db
+    restart: always
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
       POSTGRES_DB: microservice_db
-    ports:
-      - "5432:5432"
     volumes:
       - db-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
 
 volumes:
   db-data:
